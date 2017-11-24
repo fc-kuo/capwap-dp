@@ -20,9 +20,10 @@ RUN ./autogen.sh && ./configure --sysconfdir=/etc --without-systemd-journal
 
 RUN make && make install
 
-#COPY docker/docker-entrypoint.sh /
 RUN install -m 0644 /build/src/capwap-dp.conf /etc/
 
-#ENTRYPOINT ["/docker-entrypoint.sh"]
-CMD ["usr/bin/capwap-dp", "foreground"]
+# TODO: change this to multistage
+# RUN rm -rf /build
+
+ENTRYPOINT ["/usr/bin/capwap-dp", "foreground"]
 
