@@ -16,7 +16,7 @@ RUN apt-get install -y build-essential \
 COPY . /build
 
 WORKDIR /build
-RUN ./autogen.sh && ./configure --sysconfdir=/etc
+RUN ./autogen.sh && ./configure --sysconfdir=/etc --without-systemd-journal
 
 RUN make && make install
 
