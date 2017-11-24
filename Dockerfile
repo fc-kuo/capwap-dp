@@ -1,9 +1,7 @@
-FROM ubuntu:16.04 
+FROM ubuntu:16.04
 
-COPY . /
-
-RUN apt-get -qq update; \
-    apt-get install-y build-essential \
+RUN apt-get -qq update
+RUN apt-get install -y build-essential \
             automake \
             autoconf \
             libtool \
@@ -13,15 +11,17 @@ RUN apt-get -qq update; \
             libsystemd-dev \
             erlang-dev \
             liburcu-dev \
-            libconfig-dev;\
-    cd /build;\
-    ./autogen.sh;\
-    ./configure --sysconfdir=/etc;\
-    make ;\
-    make install
+            libconfig-dev
+
+COPY . /build
+
+WORKDIR /build
+RUN ./autogen.sh && ./configure --sysconfdir=/etc
+
+RUN make && make install
 
 #COPY docker/docker-entrypoint.sh /
-COPY src/ergw-dp.conf /etc/
+RUN install -m 0644 /build/src/capwap-dp.conf /etc/
 
 #ENTRYPOINT ["/docker-entrypoint.sh"]
 CMD ["usr/bin/capwap-dp", "foreground"]
