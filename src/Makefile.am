@@ -1,5 +1,5 @@
 AM_CPPFLAGS = -DSYSCONFDIR='"$(sysconfdir)"'
-AM_CFLAGS = -D_GNU_SOURCE -Wall -Wno-strict-aliasing -g -funit-at-a-time -std=gnu99 \
+AM_CFLAGS = -D_GNU_SOURCE -DDEBUG=1 -Wall -Wno-strict-aliasing -g -funit-at-a-time -std=gnu99 \
 	    $(SYSTEMD_DAEMON_CFLAGS) $(SYSTEMD_JOURNAL_CFLAGS) \
 	    -I$(top_srcdir)/include/compat \
 	    -I$(top_srcdir)/include

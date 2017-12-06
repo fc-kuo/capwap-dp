@@ -1,7 +1,6 @@
 FROM ubuntu:16.04
 
-RUN apt-get -qq update
-RUN apt-get install -y build-essential \
+RUN apt-get update && apt-get install -y build-essential \
             automake \
             autoconf \
             libtool \
@@ -13,10 +12,12 @@ RUN apt-get install -y build-essential \
             liburcu-dev \
             libconfig-dev
 
+# RUN apt-get install -y rsyslog
+
 COPY . /build
 
 WORKDIR /build
-RUN ./autogen.sh && ./configure --sysconfdir=/etc --without-systemd-journal
+RUN ./autogen.sh && ./configure --sysconfdir=/etc --without-systemd-journal --enable-debug
 
 RUN make && make install
 
